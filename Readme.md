@@ -7,11 +7,12 @@ Observable.from in các thành phần trong mảng
  
 
 Oberver:  Đăng ký một  và  lắng nghe khi có một observable thay đổi 
-PublishSubject nó chỉ phát ra sự kiện mới nhất của subscribers, mà nó không phát đến sự kiện tiếp theo , do đó bất cứ sự kiện nào trước  subscribers sẽ không được phát ra 
+### PublishSubject 
+nó chỉ phát ra sự kiện mới nhất của subscribers, mà nó không phát đến sự kiện tiếp theo , do đó bất cứ sự kiện nào trước  subscribers sẽ không được phát ra 
 ví dụ  publish  giống như  là vào lớp muộn nhưng chỉ cần nghe 1 điểm nó cần nghe 
 
 code example
-
+```swift
  let subject = PublishSubject<String>()
  
         subject.onNext("Emmit 1")
@@ -22,6 +23,7 @@ code example
             }).disposed(by: disposeBag)
         
         subject.onNext("Emmit 2")
+``` 
 Kết quả sẽ là  event Emmit 2
 
 
@@ -35,15 +37,16 @@ ReplaySubject là khởi tạo với một kích thước và duy trì bộ đ�
 
 
 
-Combining RXSwift 
+### Combining RXSwift 
 
-Concat 
+### Concat 
 1 Obserable 2 hoặc nhiều chuỗi 
 2 Observable nhiều chuỗi nối tiếp trong  một Obserable  theo thứ tự của Obserable  
 3 Hoàn thành Observable đầu tiên rồi đến Observable tiếp theo …
 4 Được sử dụng như một hàm static hoặc phương thức của observable 
 
 Example 
+```swift
 
 let first = Observable.of(1,2,3)
     let second = Observable.of(4,5,6)
@@ -56,15 +59,17 @@ let obserable = Observable.concat([first,second])
                 
         }, onError: nil , onCompleted: nil).dispose()
  
- 
+```
+
 Kết quả sẽ là 1,3,4,5,6
+
  
- 
-Merger  Kết hợp nhiều observable trong một lần phát ra 
+### Merger  Kết hợp nhiều observable trong một lần phát ra 
  
 Có thể kết hợp nhiều output của Observable vì thế nó như một Observable  khi sử dụng merger 
  
 Example
+```swift
    let left = PublishSubject<Int>()
     let right = PublishSubject<Int>()
  
@@ -81,13 +86,14 @@ let source = Observable.of(left.asObserver(),right.asObserver())
         right.onNext(4)
         right.onNext(5)
         right.onNext(6)
+```
  
-Start with 
+### Start with 
  
 Phát ra một chuỗi được chỉ địnnh trước  
  
 Code examole
- 
+ ```
 func startWith(){
         let number = Observable.of(4,5,6)
         let obserable = number.startWith(1,2,3)
@@ -97,14 +103,15 @@ func startWith(){
         }, onError: nil, onCompleted: nil, onDisposed: nil).dispose()
        
     }
+```
  
  
 Kết quả lúc này sẽ là 
  
 1,2,3,4,5,6,7
  
-Create 
- 
+### Create 
+ ```
 let source: Observable = Observable<Int>.create { (event) -> Disposable in
             
             for i in 1 ... 5 {
@@ -123,7 +130,7 @@ let source: Observable = Observable<Int>.create { (event) -> Disposable in
             print($0)
         }
  
- 
+ ```
  
  
  
