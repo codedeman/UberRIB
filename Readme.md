@@ -1,15 +1,19 @@
-         Rxswift là gì 
+ Observable được ví như trái tim của RX Swift        
+Observable sequences có thể phát ra không hoặc nhiều trong vòng đời của nó  với 3 trạng thái 
+###  .next(value: T) — khi thêm giá trị vào  một observable sequence 
+
+### .error(error: Error) — Nếu gặp phải Error một chuỗi sẽ phát ra sự kiện lỗi , và sẽ kết thúc chuỗi 
+
+### .completed — Nếu một chuỗi kết thúc nó sẽ gửi event hoàn thành đến  subscribers
 Observable:Là  thằng phát ra thông báo thay đổi 
-
-
  Observable.of   sẽ in toàn bộ mảng
 Observable.from in các thành phần trong mảng
- 
-
 Oberver:  Đăng ký một  và  lắng nghe khi có một observable thay đổi 
+
+### Subjects 
 ### PublishSubject 
-nó chỉ phát ra sự kiện mới nhất của subscribers, mà nó không phát đến sự kiện tiếp theo , do đó bất cứ sự kiện nào trước  subscribers sẽ không được phát ra 
-ví dụ  publish  giống như  là vào lớp muộn nhưng chỉ cần nghe 1 điểm nó cần nghe 
+Là nó chỉ phát ra sự kiện mới nhất của subscribers, mà nó không phát lại đến sự kiện tiếp theo , do đó bất cứ sự kiện nào trước  subscribers sẽ không được phát ra 
+Ví  dụ  thực tế  publish  giống như  là vào lớp muộn nhưng chỉ cần nghe 1 điểm nó cần nghe 
 
 code example
 ```swift
@@ -26,14 +30,60 @@ code example
 ``` 
 Kết quả sẽ là  event Emmit 2
 
+### BehaviourSubject
 
-A PublishSubject is concerned only with emitting new events to its subscribers. It does not replay next() events, so any that existed before the subscription will not be received by that subscriber. It does re-emit stop events to new subscribers however. This means that if you subscribe to a sequence that has already been terminated, the subscriber will receive that information. It is worth noting that all subject types re-emit stop events
-BehaviorSubject
+1   behavior subject  cung cấp cho  subscriber bất cứ cái gì được phát ra trước và sau  subscriber
+V í dụ thực tế behavior là một thằng vào lớp muộn nhưng muốn nghe toàn bộ những gì gần nhất có nghĩa là nó chấp nhận bất cứ event nào 
 
-Ví dụ một thằng vào lớp muộn nhưng muốn nghe toàn bộ những gì gần nhất có nghĩa là nó chấp nhận bất cứ event nào 
+code example
+
+```swift
+let subject = BehaviorSubject(value: "")
+subject.onNext("Issue 1")
+
+subject.subscribe(onNext: { (event) in
+
+    print("event \(event)")
+
+}).disposed(by: disposeBag)
+
+subject.onNext("Issue 2")
+
+```
+Kêt quả sẽ là 
+
+event Issue 1 
+event Issue 2
+
+### Replay Trong một vài trường hợp bạn muốn  một subscriber mới nhận các event mới nhất từ sequence đang đăng ký, Mặc dù đã được phát ra trước đó subject có thể lữu trữ lại và phát  lại cho một subscriber tại thời điểm đăng ký, tóm cái váy lại nó sẽ phát sự kiện nó 
+
+code example 
 
 
-ReplaySubject là khởi tạo với một kích thước và duy trì bộ đệm của các phần tử có kích thước đó và phát lại cho người mới 
+
+###  ReplaySubject 
+là khởi tạo với một kích thước và duy trì bộ đệm của các phần tử có kích thước đó và phát lại số event mới nhất được set trong kích thứớc bufferSize 
+```swift
+    let replaySub = ReplaySubject<String>.create(bufferSize: 2)
+
+    replaySub.onNext("Issue #1")
+    replaySub.onNext("Issue #2")
+    replaySub.onNext("Issue #3")
+    replaySub.onNext("Issue #5")
+    replaySub.onNext("Issue #6")
+    replaySub.onNext("Issue #7")
+
+    replaySub.subscribe { (event) in
+        
+        print("event \(event)")
+    }
+```
+
+Kết quả sẽ là:
+event next(Issue #6)
+event next(Issue #7)
+
+### 
 
 
 
@@ -64,6 +114,8 @@ let obserable = Observable.concat([first,second])
 Kết quả sẽ là 1,3,4,5,6
 
  
+ 
+ 
 ### Merger  Kết hợp nhiều observable trong một lần phát ra 
  
 Có thể kết hợp nhiều output của Observable vì thế nó như một Observable  khi sử dụng merger 
@@ -92,8 +144,9 @@ let source = Observable.of(left.asObserver(),right.asObserver())
  
 Phát ra một chuỗi được chỉ địnnh trước  
  
-Code examole
- ```
+Code example 
+ ```swift
+ 
 func startWith(){
         let number = Observable.of(4,5,6)
         let obserable = number.startWith(1,2,3)
@@ -111,7 +164,7 @@ Kết quả lúc này sẽ là
 1,2,3,4,5,6,7
  
 ### Create 
- ```
+ ```swift
 let source: Observable = Observable<Int>.create { (event) -> Disposable in
             
             for i in 1 ... 5 {
