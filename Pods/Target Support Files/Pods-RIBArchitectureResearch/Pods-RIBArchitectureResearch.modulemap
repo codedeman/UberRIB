@@ -1,0 +1,6 @@
+module Pods_RIBArchitectureResearch {
+  umbrella header "Pods-RIBArchitectureResearch-umbrella.h"
+
+  export *
+  module * { export * }
+}
