@@ -13,13 +13,12 @@ protocol LoggedOutDependency: Dependency {
     // created by this RIB.
 }
 
-final class LoggedOutComponent: Component<LoggedOutDependency>, LoggedOutDependency {
+final class LoggedOutComponent: Component<LoggedOutDependency> {
 
     // TODO: Declare 'fileprivate' dependencies that are only used by this RIB.
 }
 
 // MARK: - Builder
-
 protocol LoggedOutBuildable: Buildable {
     func build(withListener listener: LoggedOutListener) -> LoggedOutRouting
 }

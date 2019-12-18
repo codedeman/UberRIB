@@ -8,7 +8,7 @@
 
 import RIBs
 
-protocol LoggedOutInteractable: Interactable {
+protocol LoggedOutInteractable: Interactable, OffGameListener, TicTacToeListener{
     var router: LoggedOutRouting? { get set }
     var listener: LoggedOutListener? { get set }
 }

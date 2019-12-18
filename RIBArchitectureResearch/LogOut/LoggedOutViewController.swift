@@ -31,7 +31,6 @@ final class LoggedOutViewController: UIViewController, LoggedOutPresentable, Log
     init() {
         super.init(nibName: nil, bundle: nil)
     }
-
     required init?(coder aDecoder: NSCoder) {
         fatalError("Method is not supported")
     }

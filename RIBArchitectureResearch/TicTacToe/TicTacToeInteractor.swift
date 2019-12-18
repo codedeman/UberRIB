@@ -1,42 +1,35 @@
 //
-//  RootInteractor.swift
+//  TicTacToeInteractor.swift
 //  RIBArchitectureResearch
 //
-//  Created by KIENPT6 on 12/17/19.
+//  Created by KIENPT6 on 12/18/19.
 //  Copyright © 2019 KIENPT6. All rights reserved.
 //
 
 import RIBs
 import RxSwift
 
-protocol RootRouting: ViewableRouting {
-    func routeToLoggedIn(withPlayer1Name player1Name: String, player2Name: String)
-
+protocol TicTacToeRouting: ViewableRouting {
     // TODO: Declare methods the interactor can invoke to manage sub-tree via the router.
 }
 
-protocol RootPresentable: Presentable {
-    var listener: RootPresentableListener? { get set }
+protocol TicTacToePresentable: Presentable {
+    var listener: TicTacToePresentableListener? { get set }
     // TODO: Declare methods the interactor can invoke the presenter to present data.
 }
 
-protocol RootListener: class {
+protocol TicTacToeListener: class {
     // TODO: Declare methods the interactor can invoke to communicate with other RIBs.
 }
 
-final class RootInteractor: PresentableInteractor<RootPresentable>, RootInteractable, RootPresentableListener {
-    func didLogin(withPlayer1Name player1Name: String, player2Name: String) {
-        
-//        router.r
-    }
-    
+final class TicTacToeInteractor: PresentableInteractor<TicTacToePresentable>, TicTacToeInteractable, TicTacToePresentableListener {
 
-    weak var router: RootRouting?
-    weak var listener: RootListener?
+    weak var router: TicTacToeRouting?
+    weak var listener: TicTacToeListener?
 
     // TODO: Add additional dependencies to constructor. Do not perform any logic
     // in constructor.
-    override init(presenter: RootPresentable) {
+    override init(presenter: TicTacToePresentable) {
         super.init(presenter: presenter)
         presenter.listener = self
     }
