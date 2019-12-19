@@ -25,10 +25,7 @@ final class OffGameViewController: UIViewController, OffGamePresentable, OffGame
 
     weak var listener: OffGamePresentableListener?
     
-//     init() {
-//        super.init(nibName: nil, bundle: nil)
-//    }
-//    
+
      init(player1Name:String,player2Name:String) {
         
         self.player1Name = player1Name

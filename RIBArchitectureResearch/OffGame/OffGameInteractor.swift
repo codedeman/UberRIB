@@ -25,10 +25,7 @@ protocol OffGameListener: class {
 
 final class OffGameInteractor: PresentableInteractor<OffGamePresentable>, OffGameInteractable, OffGamePresentableListener {
     
-    func startGame() {
-        listener?.startTicTacToe()
-
-    }
+    
     
 
     weak var router: OffGameRouting?
@@ -41,17 +38,7 @@ final class OffGameInteractor: PresentableInteractor<OffGamePresentable>, OffGam
         presenter.listener = self
     }
     
-//    override init(presenter: OffGamePresentable,scoreStream:ScoreStream) {
-//        
-//        
-//    }
 
-    // TODO: Add additional dependencies to constructor. Do not perform any logic
-    // in constructor.
-//    override init(presenter: OffGamePresentable) {
-//        super.init(presenter: presenter)
-//        presenter.listener = self
-//    }
 
     override func didBecomeActive() {
         super.didBecomeActive()
@@ -61,6 +48,10 @@ final class OffGameInteractor: PresentableInteractor<OffGamePresentable>, OffGam
     override func willResignActive() {
         super.willResignActive()
         // TODO: Pause any business logic.
+    }
+    func startGame() {
+        listener?.startTicTacToe()
+
     }
     
     private func updateScore() {

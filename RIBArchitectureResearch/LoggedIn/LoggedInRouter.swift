@@ -70,20 +70,22 @@ final class LoggedInRouter: Router<LoggedInInteractable>, LoggedInRouting  {
     private var currentChild: ViewableRouting?
 
     
-    private func detachCurrentChild() {
-        if let currentChild = currentChild {
-            detachChild(currentChild)
-            viewController.dismiss(viewController: currentChild.viewControllable)
-        }
-    }
-    
+   
     private func attachOffGame(){
         
         let offGame = offGameBuilder.build(withListener: interactor)
         self.currentChild = offGame
         attachChild(offGame)
-//        viewController.present(viewController: )
+        viewController.present(viewController:offGame.viewControllable)
     }
+    
+    private func detachCurrentChild() {
+           if let currentChild = currentChild {
+               detachChild(currentChild)
+               viewController.dismiss(viewController: currentChild.viewControllable)
+           }
+       }
+       
 
 
 }

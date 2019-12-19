@@ -14,25 +14,23 @@ import RxCocoa
 
 
 protocol LoggedOutPresentableListener: class {
-    
     func login(withPlayer1Name player1Name: String?, player2Name: String?)
-
-    // TODO: Declare properties and methods that the view controller can invoke to perform
-    // business logic, such as signIn(). This protocol is implemented by the corresponding
-    // interactor class.
 }
 
 final class LoggedOutViewController: UIViewController, LoggedOutPresentable, LoggedOutViewControllable {
 
     weak var listener: LoggedOutPresentableListener?
     
-     private let disposeBag = DisposeBag()
 
     init() {
         super.init(nibName: nil, bundle: nil)
     }
     required init?(coder aDecoder: NSCoder) {
         fatalError("Method is not supported")
+    }
+    
+    deinit {
+        print("cancel")
     }
        
     
@@ -77,12 +75,19 @@ final class LoggedOutViewController: UIViewController, LoggedOutPresentable, Log
           loginButton.setTitle("Login", for: .normal)
           loginButton.setTitleColor(UIColor.white, for: .normal)
           loginButton.backgroundColor = UIColor.black
-          loginButton.rx.tap
-              .subscribe(onNext: { [weak self] in
-                  self?.listener?.login(withPlayer1Name: player1Field.text, player2Name: player2Field.text)
-              })
-              .disposed(by: disposeBag)
+        
+            loginButton.rx.tap
+                .subscribe(onNext: { [weak self] in
+                    self?.listener?.login(withPlayer1Name: player1Field.text, player2Name: player2Field.text)
+                })
+                .disposed(by: disposeBag)
+        
+        
+
       }
+    
+    private let disposeBag = DisposeBag()
+
 
       
 }

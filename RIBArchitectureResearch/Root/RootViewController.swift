@@ -18,15 +18,7 @@ protocol RootPresentableListener: class {
 }
 
 final class RootViewController: UIViewController, RootPresentable, RootViewControllable {
-    func dismiss(viewController: ViewControllable) {
-        
-        if presentingViewController === viewController.uiviewController
-        {
-            dismiss(animated: true, completion: nil)
-        
-        }
-        
-    }
+   
     
 
     weak var listener: RootPresentableListener?
@@ -47,6 +39,15 @@ final class RootViewController: UIViewController, RootPresentable, RootViewContr
     func present(viewController:ViewControllable)  {
         viewController.uiviewController.modalPresentationStyle  = .currentContext
         present(viewController.uiviewController,animated:  true,completion:  nil)
+    }
+    
+    func dismiss(viewController: ViewControllable) {
+        
+        if presentedViewController === viewController.uiviewController
+        {
+            dismiss(animated: false, completion: nil)
+            
+        }
     }
 }
 
