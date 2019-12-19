@@ -27,6 +27,8 @@ protocol TicTacToeListener: class {
 }
 
 final class TicTacToeInteractor: PresentableInteractor<TicTacToePresentable>, TicTacToeInteractable, TicTacToePresentableListener {
+    
+    
     func placeCurrentPlayerMark(atRow row: Int, col: Int) {
         guard board[row][col] == nil  else {
             return
@@ -42,10 +44,14 @@ final class TicTacToeInteractor: PresentableInteractor<TicTacToePresentable>, Ti
             }
         }
 
-        
-        
     }
     
+        override func didBecomeActive() {
+            super.didBecomeActive()
+            initBoard()
+        }
+    
+
     // MARK: - Private
 
     private var currentPlayer = PlayerType.player1
@@ -128,10 +134,7 @@ final class TicTacToeInteractor: PresentableInteractor<TicTacToePresentable>, Ti
         presenter.listener = self
     }
 
-    override func didBecomeActive() {
-        super.didBecomeActive()
-        // TODO: Implement business logic here.
-    }
+    
 
     override func willResignActive() {
         super.willResignActive()

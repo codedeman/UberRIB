@@ -19,6 +19,8 @@ final class TicTacToeViewController: UIViewController, TicTacToePresentable, Tic
     
         let indexPathRow =  row * GameConstants.colCount  + col
         let cell = collectionView.cellForItem(at: IndexPath(row: indexPathRow, section: Constants.sectionCount - 1))
+        cell?.backgroundColor = playerType.color
+
     }
     
     func announce(winner: PlayerType?, withCompletionHandler handler: @escaping () -> ()) {
@@ -102,14 +104,6 @@ final class TicTacToeViewController: UIViewController, TicTacToePresentable, Tic
     
 }
 
-extension TicTacToeViewController: UICollectionViewDelegate {
-
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let row = indexPath.row / GameConstants.colCount
-        let col = indexPath.row - row * GameConstants.rowCount
-        listener?.placeCurrentPlayerMark(atRow: row, col: col)
-    }
-}
 
 
 extension TicTacToeViewController: UICollectionViewDataSource {
@@ -134,3 +128,13 @@ extension TicTacToeViewController: UICollectionViewDataSource {
         cell.contentView.layer.borderColor = UIColor.lightGray.cgColor
     }
 }
+
+extension TicTacToeViewController: UICollectionViewDelegate {
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let row = indexPath.row / GameConstants.colCount
+        let col = indexPath.row - row * GameConstants.rowCount
+        listener?.placeCurrentPlayerMark(atRow: row, col: col)
+    }
+}
+
