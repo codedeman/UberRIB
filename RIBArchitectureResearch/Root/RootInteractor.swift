@@ -26,8 +26,8 @@ protocol RootListener: class {
 
 final class RootInteractor: PresentableInteractor<RootPresentable>, RootInteractable, RootPresentableListener {
     func didLogin(withPlayer1Name player1Name: String, player2Name: String) {
-        
-//        router.r
+            
+        router?.routeToLoggedIn(withPlayer1Name: player1Name, player2Name: player2Name)
     }
     
 

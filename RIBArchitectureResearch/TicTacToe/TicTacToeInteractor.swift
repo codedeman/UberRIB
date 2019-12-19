@@ -19,6 +19,8 @@ protocol TicTacToePresentable: Presentable {
 }
 
 protocol TicTacToeListener: class {
+    
+    func gameDidEnd(withWiner winner:PlayerType?)
     // TODO: Declare methods the interactor can invoke to communicate with other RIBs.
 }
 

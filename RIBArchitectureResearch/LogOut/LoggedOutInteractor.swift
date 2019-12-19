@@ -26,19 +26,6 @@ final class LoggedOutInteractor: PresentableInteractor<LoggedOutPresentable>, Lo
     
     
     
-    func startTicTacToe() {
-        
-    }
-    
-    
-    private func playerName(_ name: String?, withDefaultName defaultName: String) -> String {
-        if let name = name {
-            return name.isEmpty ? defaultName : name
-        } else {
-            return defaultName
-        }
-    }
-    
     weak var router: LoggedOutRouting?
     weak var listener: LoggedOutListener?
 
@@ -66,9 +53,18 @@ final class LoggedOutInteractor: PresentableInteractor<LoggedOutPresentable>, Lo
         let player2NameWithDefault = playerName(player2Name, withDefaultName: "Player 2")
         listener?.didLogin(withPlayer1Name: player1NameWithDefault, player2Name: player2NameWithDefault)
 
-        
 //        print("\(player1NameWithDefault) vs \(player2NameWithDefault)")
 
     }
+    
+    private func playerName(_ name: String?, withDefaultName defaultName: String) -> String {
+          if let name = name {
+              return name.isEmpty ? defaultName : name
+          } else {
+              return defaultName
+          }
+      }
+    
+    
 }
 
