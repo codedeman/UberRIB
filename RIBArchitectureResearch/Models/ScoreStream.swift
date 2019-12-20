@@ -22,7 +22,7 @@ protocol ScoreStream: class {
 }
 
 protocol MutableScoreStream: ScoreStream {
-    func updateScore(withWinner winner: PlayerType)
+    func updateScore(with winner: PlayerType)
 }
 
 class ScoreStreamImpl: MutableScoreStream {
@@ -35,7 +35,7 @@ class ScoreStreamImpl: MutableScoreStream {
             }
     }
 
-    func updateScore(withWinner winner: PlayerType) {
+    func updateScore(with winner: PlayerType) {
         let newScore: Score = {
             let currentScore = variable.value
             switch winner {

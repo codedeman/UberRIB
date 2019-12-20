@@ -21,3 +21,8 @@ LoggedOutRouter dùng LoggedOutInteractable giao tiếp với  interactor  nó s
 
 
 ViewController sử dụng listener 
+
+
+<br>
+<img src="https://github.com/codedeman/UberRIB/blob/master/image/Screen%20Shot%202019-12-20%20at%2011.52.15%20AM.png"  width=40% />
+<br>

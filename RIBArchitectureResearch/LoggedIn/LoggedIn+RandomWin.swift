@@ -6,4 +6,8 @@
 //  Copyright © 2019 KIENPT6. All rights reserved.
 //
 
-import Foundation
+
+import RIBs
+
+extension LoggedInComponent: RandomWinDependency {
+}

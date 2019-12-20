@@ -6,4 +6,9 @@
 //  Copyright © 2019 KIENPT6. All rights reserved.
 //
 
-import Foundation
+import RxSwift
+
+public protocol LoggedInActionableItem:class {
+
+    func launchGame(with id:String?) ->Observable<(LoggedInActionableItem, ())>
+}

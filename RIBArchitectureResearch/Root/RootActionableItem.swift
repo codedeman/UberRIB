@@ -6,4 +6,8 @@
 //  Copyright © 2019 KIENPT6. All rights reserved.
 //
 
-import Foundation
+import RxSwift
+
+public protocol RootActionableItem: class {
+    func waitForLogin() -> Observable<(LoggedInActionableItem,())>
+}

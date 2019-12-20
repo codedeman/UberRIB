@@ -15,21 +15,27 @@ protocol RandomWinRouting: ViewableRouting {
 
 protocol RandomWinPresentable: Presentable {
     var listener: RandomWinPresentableListener? { get set }
-    // TODO: Declare methods the interactor can invoke the presenter to present data.
+    func announce(winner: PlayerType, withCompletionHandler handler: @escaping () -> ())
+
 }
 
 protocol RandomWinListener: class {
-    // TODO: Declare methods the interactor can invoke to communicate with other RIBs.
+    func didRandomlyWin(with player: PlayerType)
+
 }
 
 final class RandomWinInteractor: PresentableInteractor<RandomWinPresentable>, RandomWinInteractable, RandomWinPresentableListener {
+    
+    
 
     weak var router: RandomWinRouting?
     weak var listener: RandomWinListener?
 
     // TODO: Add additional dependencies to constructor. Do not perform any logic
     // in constructor.
-    override init(presenter: RandomWinPresentable) {
+   init(presenter: RandomWinPresentable,
+         mutableScoreStream: MutableScoreStream) {
+        self.mutableScoreStream = mutableScoreStream
         super.init(presenter: presenter)
         presenter.listener = self
     }
@@ -43,4 +49,16 @@ final class RandomWinInteractor: PresentableInteractor<RandomWinPresentable>, Ra
         super.willResignActive()
         // TODO: Pause any business logic.
     }
+    
+    func determineWinner() {
+        
+        let random = arc4random_uniform(100)
+        let winner = random > 50 ? PlayerType.player1 : PlayerType.player2
+        presenter.announce(winner: winner) {
+            self.mutableScoreStream.updateScore(with: winner)
+            self.listener?.didRandomlyWin(with: winner)
+        }
+    }
+    private let mutableScoreStream: MutableScoreStream
+
 }

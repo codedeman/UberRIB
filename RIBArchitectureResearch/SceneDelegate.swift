@@ -13,25 +13,41 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
     private var launchRouter:LaunchRouting?
+    
+    private var urlHandler: UrlHandler?
+
 
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
+        
+//        let result = RootBuilder(dependency: AppComponent()).build()
+//
         guard let windowScene = (scene as? UIWindowScene) else { return }
-        
         let window = UIWindow(windowScene: windowScene)
-        
         self.window = window
-        
-        let launchRouter = RootBuilder(dependency: AppComponent()).build()
+        let result = RootBuilder(dependency: AppComponent()).build()
+        let launchRouter = result.launchRouter
         self.launchRouter = launchRouter
-        //        launchRouter.launch(from: window)
-        self.launchRouter?.launchFromWindow(window)
+        urlHandler = result.urlHandler
+        launchRouter.launchFromWindow(window)
+//        urlHandler?.handle(url)
+
+
+
+//            let window = UIWindow(windowScene: windowScene)
+//            self.window = window
+//
+//            self.launchRouter?.launchFromWindow(window)
         
-
-
+        
+    }
+    
+    public func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
+        urlHandler?.handle(url)
+        return true
     }
 
 
@@ -63,6 +79,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // to restore the scene back to its current state.
     }
 
+  
+
 
 }
+
+protocol UrlHandler: class {
+      func handle(_ url: URL)
+  }
 

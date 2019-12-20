@@ -18,11 +18,39 @@ protocol RootPresentableListener: class {
 }
 
 final class RootViewController: UIViewController, RootPresentable, RootViewControllable {
-   
+    func replaceModal(viewController: ViewControllable?) {
+        targetViewController = viewController
+
+        guard !animationInProgress else {
+            return
+        }
+
+        if presentedViewController != nil {
+            animationInProgress = true
+            dismiss(animated: true) { [weak self] in
+                if self?.targetViewController != nil {
+                    self?.presentTargetViewController()
+                } else {
+                    self?.animationInProgress = false
+                }
+            }
+        } else {
+            presentTargetViewController()
+        }
+    }
     
+   private var targetViewController: ViewControllable?
+    private var animationInProgress = false
 
     weak var listener: RootPresentableListener?
-    
+    private func presentTargetViewController() {
+          if let targetViewController = targetViewController {
+              animationInProgress = true
+              present(targetViewController.uiviewController, animated: true) { [weak self] in
+                  self?.animationInProgress = false
+              }
+          }
+      }
     init() {
         super.init(nibName: nil, bundle: nil)
     }

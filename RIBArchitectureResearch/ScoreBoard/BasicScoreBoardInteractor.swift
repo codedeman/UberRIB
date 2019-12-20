@@ -8,6 +8,7 @@
 
 import RIBs
 import RxSwift
+import SnapKit
 
 protocol BasicScoreBoardRouting: ViewableRouting {
     // TODO: Declare methods the interactor can invoke to manage sub-tree via the router.
@@ -15,7 +16,8 @@ protocol BasicScoreBoardRouting: ViewableRouting {
 
 protocol BasicScoreBoardPresentable: Presentable {
     var listener: BasicScoreBoardPresentableListener? { get set }
-    // TODO: Declare methods the interactor can invoke the presenter to present data.
+    func set(score: Score)
+
 }
 
 protocol BasicScoreBoardListener: class {
@@ -23,21 +25,38 @@ protocol BasicScoreBoardListener: class {
 }
 
 final class BasicScoreBoardInteractor: PresentableInteractor<BasicScoreBoardPresentable>, BasicScoreBoardInteractable, BasicScoreBoardPresentableListener {
-
-    weak var router: BasicScoreBoardRouting?
+      
+        
+        private var score: Score?
+        
+        private var player1Label: UILabel?
+        private var player2Label: UILabel?
+        private let scoreStream: ScoreStream
+        weak var router: BasicScoreBoardRouting?
     weak var listener: BasicScoreBoardListener?
 
     // TODO: Add additional dependencies to constructor. Do not perform any logic
     // in constructor.
-    override init(presenter: BasicScoreBoardPresentable) {
-        super.init(presenter: presenter)
-        presenter.listener = self
-    }
-
+    
+     init(presenter: BasicScoreBoardPresentable,
+          scoreStream: ScoreStream) {
+         self.scoreStream = scoreStream
+         super.init(presenter: presenter)
+         presenter.listener = self
+     }
     override func didBecomeActive() {
         super.didBecomeActive()
-        // TODO: Implement business logic here.
+        updateScore()
     }
+    private func updateScore() {
+        scoreStream.score
+            .subscribe(onNext: { (score: Score) in
+                self.presenter.set(score: score)
+            })
+            .disposeOnDeactivate(interactor: self)
+    }
+    
+    
 
     override func willResignActive() {
         super.willResignActive()
