@@ -1,3 +1,6 @@
+   
+   
+   Sau 2 tháng tìm hiều về Rxswift, thì hôm nay mình xin mạn phép để chia sẻ những gì mà mình học được trong 2 tháng vừa qua 
    Observable được ví như trái tim của RX Swift        
  Observable sequences có thể phát ra không hoặc nhiều trong vòng đời của nó  với 3 trạng thái 
  .next(value: T) — khi thêm giá trị vào  một observable sequence 
@@ -12,7 +15,7 @@
 
  ### Subjects 
  ### PublishSubject 
- Là nó chỉ phát ra sự kiện mới nhất của subscribers, mà nó không phát lại đến sự kiện tiếp theo , do đó bất cứ sự kiện nào trước  subscribers sẽ không được phát ra 
+ Chỉ phát ra sự kiện mới nhất của  subscribers , do đó bất cứ sự kiện nào trước  subscribers sẽ không được phát ra 
  Ví  dụ  thực tế  publish  giống như  một thằng vào lớp muộn nhưng chỉ cần nghe 1 điểm nó cần nghe 
 
  code example
@@ -32,8 +35,9 @@
 
  ### BehaviourSubject
 
- 1   behavior subject  cung cấp cho  subscriber bất cứ cái gì được phát ra trước và sau  subscriber
- Ví dụ  đơn giả là behavior là một thằng vào lớp muộn nhưng muốn nghe toàn bộ những gì gần nhất có nghĩa là nó chấp nhận bất cứ event nào 
+1  behavior subject  lưu các  các next event()  gần nhất, và phát lại cho subscriber mới 
+behavior subject  cũng giống với publishsubject chỉ khác  behavior subject  bắt đầu bằng một gía trị mặc định khi khởi tạo, giá trị này có thể bị gi đè ngay sau khi , phần tử mới được thêm vào 
+
 
  code example
 
@@ -55,14 +59,12 @@
  event Issue 1 
  event Issue 2
 
- ### Replay Trong một vài trường hợp bạn muốn  một subscriber mới nhận các event mới nhất từ sequence đang đăng ký, Mặc dù đã được phát ra trước đó subject có thể lữu trữ lại và phát  lại cho một subscriber tại thời điểm đăng ký, tóm cái váy lại nó sẽ phát sự kiện nó 
-
- code example 
-
-
-
+ 
  ###  ReplaySubject 
- là khởi tạo với một kích thước và duy trì bộ đệm của các phần tử có kích thước đó và phát lại số event mới nhất được set trong kích thứớc bufferSize 
+ là khởi tạo với một kích thước bộ đệm  lưu  các phần tử  gần nhất vào bộ nhớ đệm và sau đó phát lại các phần tử  có trong bộ nhớ đệm cho subcriber mới 
+ 
+ có kích thước đó và phát lại số event mới nhất được set trong kích thứớc bufferSize 
+ code example
  ```swift
      let replaySub = ReplaySubject<String>.create(bufferSize: 2)
 
@@ -112,9 +114,6 @@
 
  Kết quả sẽ là 1,3,4,5,6
 
-  
-  
-  
  ### Merger 
   Kết hợp nhiều observable trong một lần phát ra có thể kết hợp nhiều output của Observable vì thế nó như một Observable  khi sử dụng merger 
   
@@ -351,6 +350,9 @@ let subject = PublishSubject<String>()
 
 ```
 kết quả sẽ là 1 
+
+
+
 
 
 

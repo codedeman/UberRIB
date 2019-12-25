@@ -3,9 +3,8 @@
 
 target 'RIBArchitectureResearch' do
    pod 'RIBs', '~> 0.9'
- pod 'RxSwift', '~> 4.0'
-    pod 'RxCocoa', '~> 4.0'
     pod 'SnapKit', '~> 5.0.0'
-
+    pod 'RxSwift', '~> 4'
+    pod 'RxCocoa', '~> 4'
 
 end

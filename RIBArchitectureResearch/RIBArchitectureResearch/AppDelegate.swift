@@ -23,10 +23,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       self.window = window
       //
       let launchRouter = RootBuilder(dependency: AppComponent()).build()
-      self.launchRouter = launchRouter
       self.launchRouter?.launchFromWindow(window)
         return true
     }
+    
+    
 
     // MARK: UISceneSession Lifecycle
 

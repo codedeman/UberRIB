@@ -26,6 +26,17 @@
 	<true/>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
+        <key>CFBundleURLTypes</key>
+        <array>
+            <dict>
+                <key>CFBundleURLName</key>
+                <string>com.uber.TicTacToe</string>
+                <key>CFBundleURLSchemes</key>
+                <array>
+                    <string>ribs-training</string>
+                </array>
+            </dict>
+        </array>
 		<key>UIApplicationSupportsMultipleScenes</key>
 		<false/>
 		<key>UISceneConfigurations</key>
