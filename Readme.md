@@ -1,5 +1,4 @@
-   
-   
+
    Sau 2 tháng tìm hiều về Rxswift, thì hôm nay mình xin mạn phép để chia sẻ những gì mà mình học được trong 2 tháng vừa qua 
    Observable được ví như trái tim của RX Swift        
  Observable sequences có thể phát ra không hoặc nhiều trong vòng đời của nó  với 3 trạng thái 
@@ -85,10 +84,6 @@ behavior subject  cũng giống với publishsubject chỉ khác  behavior subje
  event next(Issue #6)
  event next(Issue #7)
 
- ### 
-
-
-
  ### Combining Observables
  ### Concat 
  1 Obserable 2 hoặc nhiều chuỗi 
@@ -154,7 +149,6 @@ behavior subject  cũng giống với publishsubject chỉ khác  behavior subje
         
      }
  ```
-  
   
  Kết quả lúc này sẽ là 
   
