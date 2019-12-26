@@ -177,6 +177,7 @@ behavior subject  cũng giống với publishsubject chỉ khác  behavior subje
   ```
   ### RxSwift Transforming
   ### map
+  Định nghĩ map sẽ biến đổi từng thành phần của  Observable
   
   code example
   
@@ -195,6 +196,7 @@ behavior subject  cũng giống với publishsubject chỉ khác  behavior subje
   
   ### flat map
   
+  Đinh nghĩa flatMap biến đổi các thành phần phát ra bởi một Observable trong  thành nhiểu  Observable sau đó gộp lại thành một  Observable duy nhất 
   code example 
   Đầu tiên cần phải khởi tạo 1 struct 
   ``` swift 
@@ -221,9 +223,37 @@ behavior subject  cũng giống với publishsubject chỉ khác  behavior subje
   ```
   Kết quả lúc này sẽ là event 50 
   
+  
+  ### flatMapLatest
+  Sự khác biệt giữa flatMap và flatMapLatest  là nó huỷ trước khi subscription khi  subscription xảy ra 
+  ``` swift
+  
+      let outerObservable = Observable<Int>.interval(0.5, scheduler: MainScheduler.instance).take(2)
+      let combineObservable = outerObservable.flatMapLatest {  value in
+      return Observable<NSInteger>.interval(0.3, scheduler: MainScheduler.instance).take(3).map {  inerValue in
+      print("Outer value \(value) Iner Value \(inerValue)")
+      }
+      }
+      combineObservable.subscribe(onNext: { (event) in
+      print("event \(event)")
+      }, onError: nil, onCompleted: nil).disposed(by: disposeBag)
+  ````
+  
+  Kết quả sẽ là 
+  
+  Outer value 0 Iner Value 0
+  event ()
+  Outer value 1 Iner Value 0
+  event ()
+  Outer value 1 Iner Value 1
+  event ()
+  Outer value 1 Iner Value 2
+  event ()
+
+  
   ### Filtering Operators 
   ### Element at 
-   Sẽ lấy một phần tử nằm ở một vị trí xác định trong chuỗi mà bạn muốn nhận được và bỏ qua các thành phần khác 
+   Sẽ lấy một phần tử nằm ở một vị trí xác định trong chuỗi mà bạn muốn nhận được và bỏ qua  
    
    ``` swift 
    
@@ -240,8 +270,6 @@ behavior subject  cũng giống với publishsubject chỉ khác  behavior subje
    ### Filter 
    
    Chỉ phát ra những phần tử thoả mãn điều kiện 
-   
-   
    code example
    
    ```swift
@@ -263,12 +291,12 @@ behavior subject  cũng giống với publishsubject chỉ khác  behavior subje
   ```swift 
   
   
-   let observable1 = Observable.of("A","B","C","D","E","F")
-          
-          observable1.skip(0).subscribe { (event) in
-
-              print(event)
-          }.disposed(by: disposeBag)
+  let observable1 = Observable.of("A","B","C","D","E","F")
+  
+    observable1.skip(0).subscribe { (event) in
+  
+  print(event)
+  }.disposed(by: disposeBag)
   
   
   ```
@@ -349,4 +377,10 @@ kết quả sẽ là 1
 
 
 
+
+Ứng dụng thực tế 
+
+### Debounce
+
+Chỉ phát ra sự kiện qua một thời gian nhất định trong quãng thời gian đó không phát ra tín hiệu khác 
 
