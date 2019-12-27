@@ -6,7 +6,7 @@
    RxSwift là một phiên bản Reactive Extension được viết bằng ngôn ngữ Swift. ReactiveX là sự kết hợp của những ý tưởng hay nhất từ Observer pattern, Iterator pattern và functional programming.
    RxSwift sẽ giúp công việc của bạn trở nên đơn giản hơn. Thay cho notifications, một đối tượng khó để test, ta có thể sử dụng signals. Thay cho delegates, thứ tốn rất nhiều code, ta có thể viết blocks và bỏ điswitches/ifs lồng nhau. Ta còn có thể sử dụng KVO, IBActions, filters, MVVM và nhiều tiện ích khác được hỗ trợ mượt mà trong RxSwift.
    
-   ###1  Observable Sequences 🎞
+   ### 1  Observable Sequences 🎞
    Đầu tiên bạn cần phải hiểu bất mọi thứ trong Rxswift là  observable sequence hoặc một vài thứ họat động trong  subscribes các sự kiện phát ra bởi một observable sequence. 
    
  Observable sequences có thể phát ra không hoặc nhiều trong vòng đời của nó  với 3 trạng thái 
@@ -397,12 +397,11 @@ Chỉ phát ra sự kiện qua một thời gian nhất định trong quãng th�
 
 
 
+
+
+Bài viết này  là những gì mình học được trong những ngày tháng tiếp cận với Rx swift nên không  thể trách  nhiều thiếu sót mong các bậc cao nhân góp ý giúp mình để mình cải thiện trong bài viết sau 
+
+
 ### Ứng dụng thực tế 
 
-* [App tin tức  ]("https://github.com/codedeman/TT101/tree/f679be78c195e621b6a28b66c75c4bb8dc2c4cf5")
-
-
-Bài viết này  là những gì mình học được trong những ngày tháng tiếp cận với Rx swift nên không  thể trách  nhiều thiếu sót mong các bậc cao nhân góp ý giúp mình để mình 
-
-
-
+* [App tin tức  ](https://github.com/codedeman/TT101/tree/f679be78c195e621b6a28b66c75c4bb8dc2c4cf5)
