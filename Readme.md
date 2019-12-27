@@ -20,7 +20,7 @@
  Observable.from in các thành phần trong mảng
  Oberver:  Đăng ký một  và  lắng nghe khi có một observable thay đổi 
 
- ### Subjects 
+ ### 2  Subjects 
  ### PublishSubject 
  Chỉ phát ra sự kiện mới nhất của  subscribers , do đó bất cứ sự kiện nào trước  subscribers sẽ không được phát ra 
  Ví  dụ  thực tế  publish  giống như  một thằng vào lớp muộn nhưng chỉ cần nghe 1 điểm nó cần nghe 
@@ -89,7 +89,7 @@ behavior subject  cũng giống với publishsubject chỉ khác  behavior subje
  event next(Issue #6)
  event next(Issue #7)
 
- ### Combining Observables
+ ### 3 Combining Observables
  ### Merger 
   merge() cho phép kết hợp nhiều  Obseravble bằng cách gộp cái emit lại với nhau 
   Bạn có thể kết hơp nhiều output của nhiều  Obseravble thành  một Obseravble khi sử dụng   Merger  operator 
@@ -192,7 +192,7 @@ behavior subject  cũng giống với publishsubject chỉ khác  behavior subje
       }
   
   ```
-  ### RxSwift Transforming
+  ### 4 RxSwift Transforming
   ### map
   Rxswift map hoạt động tương tự thư viện chuẩn của swift điểm khác biệt là nó hoạt động trong một observables 
   
@@ -405,3 +405,4 @@ Bài viết này  là những gì mình học được trong những ngày thán
 ### Ứng dụng thực tế 
 
 * [App tin tức  ](https://github.com/codedeman/TT101/tree/f679be78c195e621b6a28b66c75c4bb8dc2c4cf5)
+*[App Todolist](https://github.com/codedeman/todolistApp-)
