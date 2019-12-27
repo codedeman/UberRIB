@@ -1,25 +1,48 @@
 
-### Đùa nghịc với Rxswift 
-   Sau 2 tháng tìm hiều về Rxswift, thì hôm nay mình xin mạn phép để chia sẻ những gì mà mình học được trong 2 tháng vừa qua mong rằng bài viết sẽ hữu ích cho các bạn mới tiếp cận với RxSwift  
+### Đùa nghịc với Rxswift  cấp tốc 
+Sau 2 tháng tìm hiều về Rxswift hôm nay mình xin mạn phép, chia sẻ những gì mà mình học được trong 2 tháng vừa qua . Để không làm mất thời gian bài viết này  mình sẽ chỉ nói sơ qua về khái niệm, mà không đi sâu vào cụ thể và mình  sẽ code để demo các cách thức hoạt động của các thành phần để xem nó ra sao . Dân IT nên thích làm hơn là học lý thuyết suông, có người từng bảo với mình rằng "Nên làm để học " sao bao năm ngẫm lại vẫn thấy anh ấy nói đúng , mong rằng bài viết sẽ hữu ích cho các bạn mới tiếp cận với RxSwift.
    
    ### RxSwift là gì 
    RxSwift là một phiên bản Reactive Extension được viết bằng ngôn ngữ Swift. ReactiveX là sự kết hợp của những ý tưởng hay nhất từ Observer pattern, Iterator pattern và functional programming.
    RxSwift sẽ giúp công việc của bạn trở nên đơn giản hơn. Thay cho notifications, một đối tượng khó để test, ta có thể sử dụng signals. Thay cho delegates, thứ tốn rất nhiều code, ta có thể viết blocks và bỏ điswitches/ifs lồng nhau. Ta còn có thể sử dụng KVO, IBActions, filters, MVVM và nhiều tiện ích khác được hỗ trợ mượt mà trong RxSwift.
    
    ### 1  Observable Sequences 🎞
-   Đầu tiên bạn cần phải hiểu bất mọi thứ trong Rxswift là  observable sequence hoặc một vài thứ họat động trong  subscribes các sự kiện phát ra bởi một observable sequence. 
+   Đầu tiên bạn cần phải hiểu  mọi thứ trong Rxswift là  observable sequence từ  subscribes đến xử lý  sự kiện thông qua  bởi một observable sequence. Các kiểu dữ liệu như Array String hoặc Dictionary sẽ được convert sang một observable sequence  hoặc bất cứ đối tượng nào tuân theo Sequence Protocol của Swift Standard Library
    
- Observable sequences có thể phát ra không hoặc nhiều trong vòng đời của nó  với 3 trạng thái 
- .next(value: T) — khi nhận  giá trị vào  một observable sequence 
+   ### Tạo một vài observable sequences xem thế nào nhé 
+   
+   ``` swif 
+   
+   let helloSequence = Observable.just("Hello Rx")
+   let fibonacciSequence = Observable.from([0,1,1,2,3,5,8])
+   let dictSequence = Observable.from([1:"Hello",2:"World"])
+   ```
+   Bạn đăng ký một  observable sequences bằng câu lệnh  subscribe(on:(Event<T>)-> ()). 
+   
+   
+   Qua block sẽ nhận được tất cả events được phát ra bởi sequence.
+   
+   ``` swift
+   
+   let helloSequence = Observable.of("Hello Rx")
+   let subscription = helloSequence.subscribe { event in
+     print(event)
+   }
+   OUTPUT: 
+   next("Hello Rx") 
+   completed
+   
+   ```
 
- .error(error: Error) — Nếu gặp phải Error một chuỗi sẽ phát ra sự kiện lỗi , và sẽ kết thúc chuỗi 
+ Observable sequences có thể phát ra không hoặc nhiều  event trong vòng đời của nó 
+Trong Rxswift  một Event  như một Enumeration Type (Nôm na là  danh sách các trường hợp )có với 3 trạng thái 
+ .next(value: T) — xảy ra khi một hay một tập hợp các giá trị được bổ sung thêm vào Observable sequences, nó sẽ gửi next event cho các subscribers đã đăng ký ở ví dụ trên.
 
- .completed — Nếu một chuỗi kết thúc nó sẽ gửi event hoàn thành đến  subscribers
- Observable:Là  thằng phát ra thông báo thay đổi 
-  Observable.of   sẽ in toàn bộ mảng
- Observable.from in các thành phần trong mảng
- Oberver:  Đăng ký một  và  lắng nghe khi có một observable thay đổi 
+ .error(error: Error) — Nếu gặp phải Error một chuỗi sẽ phát ra sự kiện lỗi , và sẽ kết thúc Observable sequences 
 
+ .completed — Nếu một chuỗi kết thúc nó sẽ gửi event hoàn thành gửi đến cho các  subscribers
+ 
+  
  ### 2  Subjects 
  ### PublishSubject 
  Chỉ phát ra sự kiện mới nhất của  subscribers , do đó bất cứ sự kiện nào trước  subscribers sẽ không được phát ra 
@@ -151,8 +174,7 @@ behavior subject  cũng giống với publishsubject chỉ khác  behavior subje
   
  ### Start with 
   
- Phát ra một chuỗi  mà bạn muốn phát ra đầu tiên 
-  
+ StartWith được sử dụng khi ta muốn phát sinh sự kiện với một tập giá trị nào đó, sau đó mới phát sinh các tập giá trị được định nghĩa trong Observable.  
  Code example 
   ```swift
   
@@ -195,7 +217,7 @@ behavior subject  cũng giống với publishsubject chỉ khác  behavior subje
   ### 4 RxSwift Transforming
   ### map
   Rxswift map hoạt động tương tự thư viện chuẩn của swift điểm khác biệt là nó hoạt động trong một observables 
-  
+   hép biến đổi Map cho phép ta thực hiện biến đổi ứng với từng phần tử trong Observable Sequence trước khi gửi tới Subscribe
   code example
   
   ```swift
@@ -216,7 +238,6 @@ behavior subject  cũng giống với publishsubject chỉ khác  behavior subje
   ### flat map
   Đinh nghĩa flatMap biến đổi các thành phần phát ra bởi một Observable trong  thành nhiểu  Observable sau đó gộp lại thành một  Observable duy nhất 
   code example 
-  Đầu tiên cần phải khởi tạo 1 struct 
   ``` swift 
   struct Player {
       var score:BehaviorRelay<Int>
@@ -307,9 +328,7 @@ behavior subject  cũng giống với publishsubject chỉ khác  behavior subje
   
   code example
   ```swift 
-  
-  
-  let observable1 = Observable.of("A","B","C","D","E","F")
+    let observable1 = Observable.of("A","B","C","D","E","F")
   
     observable1.skip(0).subscribe { (event) in
   
@@ -378,8 +397,6 @@ let subject = PublishSubject<String>()
             
         }).disposed(by: disposeBag)
         
-       
-        
         subject.onNext("event 1")
         trigger.onNext("X")
 
@@ -399,10 +416,19 @@ Chỉ phát ra sự kiện qua một thời gian nhất định trong quãng th�
 
 
 
-Bài viết này  là những gì mình học được trong những ngày tháng tiếp cận với Rx swift nên không  thể trách  nhiều thiếu sót mong các bậc cao nhân góp ý giúp mình để mình cải thiện trong bài viết sau 
+
 
 
 ### Ứng dụng thực tế 
 
 * [App tin tức  ](https://github.com/codedeman/TT101/tree/f679be78c195e621b6a28b66c75c4bb8dc2c4cf5)
-*[App Todolist](https://github.com/codedeman/todolistApp-)
+* [App Todolist](https://github.com/codedeman/todolistApp-)
+
+
+Bài viết này  là những gì mình học được trong những ngày tháng tiếp cận với Rx swift nên không  thể trách  nhiều thiếu sót mong các bậc cao nhân góp ý giúp mình để mình cải thiện trong bài viết sau  
+mọi thông tin góp ý xin gửi về địa chỉ 
+* [phamtrungkiendev@gmail.com]
+
+*[Bài viết này được tham khảo theo nguồn](https://medium.com/ios-os-x-development/learn-and-master-%EF%B8%8F-the-basics-of-rxswift-in-10-minutes-818ea6e0a05b)
+
+
